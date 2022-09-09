@@ -19,31 +19,40 @@ const AuthForm = () => {
     const enteredPassword = passwordInputRef.current.value;
 
     setIsLoading(true);
+    let url;
     if (isLogin) {
-      setIsLoading(false);
+      url = "http://identitytoolkit.github";
     } else {
-      fetch("http://identitytoolkit.github", {
-        method: "POST",
-        body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        }),
-        headers: { "Content-Type": "application/json" },
-      }).then((res) => {
+      url = "https://identitytoolkit.github.com";
+    }
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        email: enteredEmail,
+        password: enteredPassword,
+        returnSecureToken: true,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
         if (res.ok) {
-          //
+          return res.json();
         } else {
           return res.json().then((data) => {
             let errorMessage = "Authentication failed";
             // if (data && data.error && data.error.message) {
             //   errorMessage = data.error.message;
             // }
-            alert(errorMessage);
+            throw new Error(errorMessage);
           });
         }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        alert(err.message);
       });
-    }
   };
 
   return (
