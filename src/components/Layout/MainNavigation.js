@@ -9,7 +9,7 @@ const MainNavigation = () => {
 
   const isLoggedIn = authContext.isLoggedIn;
 
-  const logoutHandler = authContext.logoutHandler;
+  const logoutHandler = authContext.logout;
 
   return (
     <header className={classes.header}>

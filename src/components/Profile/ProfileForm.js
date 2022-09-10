@@ -13,17 +13,20 @@ const ProfileForm = () => {
 
     const enteredNewPassword = newPasswordInputRef.current.value;
 
-    fetch("https://identitytoolkit.github.io/", {
-      method: "POST",
-      body: JSON.stringify({
-        idToken: authContext.token,
-        password: enteredNewPassword,
-        returnSecureToken: false,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCrn8UXjlJnbHByzpBii36mWZ-3Vp9DiXk",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          idToken: authContext.token,
+          password: enteredNewPassword,
+          returnSecureToken: false,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => {
       //
       history.replace("/");
     });
